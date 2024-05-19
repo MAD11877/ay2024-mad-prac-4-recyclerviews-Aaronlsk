@@ -49,9 +49,10 @@
     <ImageView
         android:id="@+id/imageBig"
         android:layout_width="281dp"
-        android:layout_height="368dp"
+        android:layout_height="304dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/ic_launcher"
+        android:visibility="gone" />
 
 </LinearLayout>

@@ -1,31 +1,62 @@
 package sg.edu.np.mad.madpractical4;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
+import android.content.Intent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class UserViewHolder extends RecyclerView.ViewHolder {
+import java.util.Random;
 
-    private ImageView imageSmall;
-    private TextView textName;
-    private TextView textDescription;
-    private ImageView imageBig;
+public class UserViewHolder extends RecyclerView.ViewHolder {
+    private TextView name;
+    private TextView description;
+    private ImageView smallImage;
+    private ImageView bigImage;
 
     public UserViewHolder(@NonNull View itemView) {
         super(itemView);
-        imageSmall = itemView.findViewById(R.id.imageSmall);
-        textName = itemView.findViewById(R.id.textName);
-        textDescription = itemView.findViewById(R.id.textDescription);
-        imageBig = itemView.findViewById(R.id.imageBig);
+        name = itemView.findViewById(R.id.textName);
+        description = itemView.findViewById(R.id.textDescription);
+        smallImage = itemView.findViewById(R.id.imageSmall);
+        bigImage = itemView.findViewById(R.id.imageBig);
+
+        smallImage.setOnClickListener(v -> {
+            showAlertDialog();
+        });
     }
 
     public void bind(User user) {
-        textName.setText(user.name);
-        textDescription.setText(user.description);
-        imageSmall.setImageResource(R.mipmap.ic_launcher);
-        imageBig.setImageResource(R.mipmap.ic_launcher);
+        name.setText(user.name);
+        description.setText(user.description);
+        smallImage.setImageResource(R.mipmap.ic_launcher);
+        bigImage.setImageResource(R.mipmap.ic_launcher);
+    }
+
+    private void showAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(itemView.getContext());
+        builder.setTitle("Profile");
+        builder.setMessage("MADness");
+
+        builder.setNegativeButton("Close", (dialog, which) -> {
+            dialog.dismiss();
+        });
+
+        builder.setPositiveButton("View", (dialog, which) -> {
+            int randomInteger = new Random().nextInt(1000000);
+
+            Intent intent = new Intent(itemView.getContext(), MainActivity.class);
+            intent.putExtra("randomInteger", randomInteger);
+            itemView.getContext().startActivity(intent);
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

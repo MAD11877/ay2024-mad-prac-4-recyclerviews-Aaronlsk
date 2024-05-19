@@ -17,8 +17,6 @@ import java.util.Random;
 public class ListActivity extends AppCompatActivity {
 
     private List<User> userList;
-    private RecyclerView recyclerView;
-    private UserAdapter userAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,23 +24,18 @@ public class ListActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_list);
 
-        recyclerView = findViewById(R.id.recyclerView);
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-
         userList = generateRandomUsers(20);
 
-        userAdapter = new UserAdapter(userList);
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        UserAdapter userAdapter = new UserAdapter(userList);
         recyclerView.setAdapter(userAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-        userList = generateRandomUsers(20);
     }
 
     private List<User> generateRandomUsers(int count) {
